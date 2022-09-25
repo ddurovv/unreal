@@ -1,0 +1,19 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "e:\\projects\\unreal\\tanki\\source\\tanki\\tankigamemodebase.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\tankieditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\unrealeditor\\development\\tanki\\definitions.tanki.h",
+            "e:\\projects\\unreal\\tanki\\source\\tanki\\tankigamemodebase.h",
+            "e:\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "e:\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "e:\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\serverstatreplicator.generated.h",
+            "e:\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gamemodebase.generated.h",
+            "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\unrealeditor\\inc\\tanki\\tankigamemodebase.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

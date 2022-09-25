@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Tanki.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Tanki.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\TankiEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Tanki">
+      <UniqueIdentifier>{4D791CD3-0CA8-3D1D-B5D3-586546132C87}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Tanki\Tanki.Build.cs">
+      <Filter>Source\Tanki</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Tanki\Tanki.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\Tanki.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\TankiGameModeBase.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\TankiGameModeBase.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\TankPawn.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\TankPawn.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\TankPlayerController.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\TankPlayerController.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

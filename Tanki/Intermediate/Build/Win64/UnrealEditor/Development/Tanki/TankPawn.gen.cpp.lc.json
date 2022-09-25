@@ -1,0 +1,15 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\unrealeditor\\inc\\tanki\\tankpawn.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\tankieditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\unrealeditor\\development\\tanki\\definitions.tanki.h",
+            "e:\\projects\\unreal\\tanki\\source\\tanki\\tankpawn.h",
+            "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\unrealeditor\\inc\\tanki\\tankpawn.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "e:\\projects\\unreal\\tanki\\source\\tanki\\tankplayercontroller.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\tankieditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\unrealeditor\\development\\tanki\\definitions.tanki.h",
+            "e:\\projects\\unreal\\tanki\\source\\tanki\\tankplayercontroller.h",
+            "e:\\projects\\unreal\\tanki\\intermediate\\build\\win64\\unrealeditor\\inc\\tanki\\tankplayercontroller.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"E:\\Projects\\unreal\\Tanki\\Source\\Tanki\\Tanki.Build.cs",
+		"E:\\Projects\\unreal\\Tanki\\Source\\Tanki.Target.cs",
+		"E:\\Projects\\unreal\\Tanki\\Source\\TankiEditor.Target.cs"
+	],
+	"EngineVersion": "5.0.3"
+}

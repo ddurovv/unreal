@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Tanki",
+			"Path": "E:\\Projects\\unreal\\Tanki\\Source\\Tanki.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "TankiEditor",
+			"Path": "E:\\Projects\\unreal\\Tanki\\Source\\TankiEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
