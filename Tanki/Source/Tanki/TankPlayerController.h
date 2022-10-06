@@ -31,5 +31,6 @@ private:
 	void RotateRight(float Value);
 
 	void Fire();
-	void FireSpecial();
+	//void FireSpecial();
+	void ChangeCannon();
 };

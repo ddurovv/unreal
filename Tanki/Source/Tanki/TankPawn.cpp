@@ -35,7 +35,9 @@ void ATankPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	TankController = Cast<ATankPlayerController>(GetController());
-	SetupCannon();
+	SetupCannon(CannonClass);
+	SetupDefaultCannon();
+	SetupAmmoCannon(3);
 }
 
 void ATankPawn::MoveForward(float Value)
@@ -53,9 +55,9 @@ void ATankPawn::RotateTank(float Value)
 	RotateRightAxisValue = Value;
 }
 
-void ATankPawn::SetupCannon()
+void ATankPawn::SetupCannon(TSubclassOf<ACannon> newCannon)
 {
-	if (!CannonClass)
+	if (!newCannon)
 	{
 		return;
 	}
@@ -66,8 +68,35 @@ void ATankPawn::SetupCannon()
 	FActorSpawnParameters SpawnParam;
 	SpawnParam.Instigator = this;
 	SpawnParam.Owner = this;
-	Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass, SpawnParam);
+	Cannon = GetWorld()->SpawnActor<ACannon>(newCannon, SpawnParam);
 	Cannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
+}
+
+void ATankPawn::SetupDefaultCannon()
+{
+	if (!DefaultCannonClass)
+	{
+		return;
+	}
+	if (DefaultCannon)
+	{
+		DefaultCannon->Destroy();
+	}
+	FActorSpawnParameters SpawnParam;
+	SpawnParam.Instigator = this;
+	SpawnParam.Owner = this;
+	DefaultCannon = GetWorld()->SpawnActor<ACannon>(DefaultCannonClass, SpawnParam);
+	DefaultCannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
+
+}
+
+
+void ATankPawn::SetupAmmoCannon(uint8 Ammo)
+{
+	if (Cannon && DefaultCannon && !bDefaultCannon) { //v positivnom sluchae bDefaultCannon = false
+		Cannon->SetupAmmo(Ammo);
+		DefaultCannon->SetupAmmo(DefaultCannonAmmo);
+	}
 }
 
 void ATankPawn::Fire()
@@ -78,12 +107,28 @@ void ATankPawn::Fire()
 	}
 }
 
-void ATankPawn::FireSpecial()
+/*void ATankPawn::FireSpecial()
 {
 	if (Cannon)
 	{
 		Cannon->FireSpecial();
 	}
+}*/
+
+void ATankPawn::ChangeCannon()
+{
+	if (Cannon && DefaultCannon)
+	{
+		TempCannon = Cannon;
+		Cannon = DefaultCannon;
+		DefaultCannon = TempCannon;
+		bDefaultCannon = !bDefaultCannon;
+	}
+}
+
+bool ATankPawn::GetbDefaultCannon() const
+{
+	return bDefaultCannon;
 }
 
 void ATankPawn::Tick(float DeltaTime)

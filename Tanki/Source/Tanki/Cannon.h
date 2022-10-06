@@ -16,13 +16,16 @@ public:
 	// Sets default values for this actor's properties
 	ACannon();
 	void Fire();
-	void FireSpecial();
+	//void FireSpecial();
 	void Reload();
 	bool IsReadyToFire();
 	void Shoot();
-	void ShootSpecial();
+	void SetupAmmo(uint8 Ammo);
+	//void ShootSpecial();
 	FTimerHandle ReloadTimer;
 	FTimerHandle SerialTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
+	uint8 Bullets;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -32,20 +35,23 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	class UArrowComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	TSubclassOf<class AProjectile> ProjectileClass;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	ECannonType CannonType = ECannonType::FireProjectile;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
-	float FireRate = 1.0f;
+	float FireRate = 0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
 	float FireRange = 1000.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
 	float FireDamage = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
-	uint8 FireSerialAmount = 3;
+	uint8 FireSerialAmount = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
-	uint8 FireSpecialSerialAmount = 3; 
+	uint8 FireSpecialSerialAmount = 1; 
 private:
 	bool bReadyToFire = false;
 

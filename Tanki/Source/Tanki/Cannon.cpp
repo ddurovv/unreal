@@ -3,6 +3,7 @@
 
 #include "Cannon.h"
 
+#include "Projectile.h"
 #include "ThumbnailHelpers.h"
 #include "TimerManager.h"
 #include "Components/ArrowComponent.h"
@@ -25,6 +26,7 @@ void ACannon::BeginPlay()
 {
 	Super::BeginPlay();
 	Reload();
+	SetupAmmo(3);
 }
 void ACannon::Fire()
 {
@@ -34,23 +36,138 @@ void ACannon::Fire()
 	}
 	bReadyToFire = false;
 
-	for (uint8 Serial = 0; Serial < FireSerialAmount; Serial++)
+	if (Bullets > 0)
 	{
-		//tut dolzhen bit' tol'ko timer, kotoriy zakomenchen dal'she
-		if (CannonType == ECannonType::FireProjectile)
+		for (uint8 Serial = 0; Serial < FireSerialAmount; Serial++)
+		{
+			if (CannonType == ECannonType::FireProjectile)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Fire projectile")));
+				FActorSpawnParameters spawnParam;
+				spawnParam.Owner = this;
+				AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation(), spawnParam);
+				if (projectile)
+				{
+					projectile->Start();
+				}
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Fire trace")));
+				FHitResult hitResult;
+				FCollisionQueryParams traceParams;
+				traceParams.bTraceComplex = true;
+				traceParams.bReturnPhysicalMaterial = false;
+
+				FVector start = ProjectileSpawnPoint->GetComponentLocation();
+				FVector end = start + ProjectileSpawnPoint->GetForwardVector() * FireRange;
+
+				if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_GameTraceChannel1, traceParams))
+				{
+					DrawDebugLine(GetWorld(), start, hitResult.Location, FColor::Purple, false, 2.0f, 0, 4.0f);
+					if (hitResult.GetActor())
+					{
+						UE_LOG(LogTemp, Warning, TEXT("Projectile overlap : %s"), *hitResult.GetActor()->GetName());
+						hitResult.GetActor()->Destroy();
+					}
+				}
+				else
+				{
+					DrawDebugLine(GetWorld(), start, end, FColor::Blue, false, 2.0f, 0, 4.0f);
+				}
+			} 
+
+			//GetWorld()->GetTimerManager().SetTimer(SerialTimer, this, &ACannon::Shoot, 1 / (FireRate), false);
+		}
+		Bullets-= 1;
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Out of ammo!!!")));
+		return;
+	}
+	GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &ACannon::Reload, (1 / FireRate), false);
+}
+
+void ACannon::Reload()
+{
+	bReadyToFire = true;
+}
+bool ACannon::IsReadyToFire()
+{
+	return bReadyToFire;
+}
+/*void ACannon::Shoot()
+{
+	if (CannonType == ECannonType::FireProjectile)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Fire projectile")));
+		FActorSpawnParameters spawnParam;
+		spawnParam.Owner = this;
+		AProjectile* projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation(), spawnParam);
+		if (projectile)
+		{
+			projectile->Start();
+		}
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Fire trace")));
-	}
+		FHitResult hitResult;
+		FCollisionQueryParams traceParams;
+		traceParams.bTraceComplex = true;
+		traceParams.bReturnPhysicalMaterial = false;
 
-		//GetWorld()->GetTimerManager().SetTimer(SerialTimer, this, &ACannon::Shoot, 1 / (FireRate), false);
+		FVector start = ProjectileSpawnPoint->GetComponentLocation();
+		FVector end = start + ProjectileSpawnPoint->GetForwardVector() * FireRange;
+
+		if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_GameTraceChannel1, traceParams))
+		{
+			DrawDebugLine(GetWorld(), start, hitResult.Location, FColor::Purple, false, 2.0f, 0, 4.0f);
+			if (hitResult.GetActor())
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Projectile overlap : %s"), *hitResult.GetActor()->GetName());
+				hitResult.GetActor()->Destroy();
+			}
+		}
+		else
+		{
+			DrawDebugLine(GetWorld(), start, end, FColor::Blue, false, 2.0f, 0, 4.0f);
+		}
+	} 
+}*/
+
+void ACannon::SetupAmmo(uint8 Ammo)
+{
+	if (Ammo > 0) {
+		Bullets = Ammo;
 	}
-	GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &ACannon::Reload, (1 / FireRate), false);
+	else GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Ammo is null")));
 }
-void ACannon::FireSpecial()
+/*void ACannon::ShootSpecial()
+{
+	if (!IsReadyToFire())
+	{
+		return;
+	}
+	bReadyToFire = false;
+	
+	for (uint8 Serial = 0; Serial < FireSpecialSerialAmount; Serial++)
+	{
+		//analogichno fire()
+		if (CannonType == ECannonType::FireProjectile)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Special Fire projectile")));
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Special Fire trace")));
+		}
+		
+		//GetWorld()->GetTimerManager().SetTimer(SerialTimer, this, &ACannon::ShootSpecial, (1 / FireRate), false);
+	}
+}*/
+/*void ACannon::FireSpecial()
 {
 	if (!IsReadyToFire())
 	{
@@ -73,35 +190,4 @@ void ACannon::FireSpecial()
 		//GetWorld()->GetTimerManager().SetTimer(SerialTimer, this, &ACannon::ShootSpecial, (1 / FireRate), false);
 	}
 	GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &ACannon::Reload, 1 / (FireRate * 2), false);
-}
-
-void ACannon::Reload()
-{
-	bReadyToFire = true;
-}
-bool ACannon::IsReadyToFire()
-{
-	return bReadyToFire;
-}
-void ACannon::Shoot()
-{
-	if (CannonType == ECannonType::FireProjectile)
-	{
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Fire projectile")));
-	}
-	else
-	{
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Fire trace")));
-	}
-}
-void ACannon::ShootSpecial()
-{
-	if (CannonType == ECannonType::FireProjectile)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Special Fire projectile")));
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, FString::Printf(TEXT("Special Fire trace")));
-	}
-}
+}*/

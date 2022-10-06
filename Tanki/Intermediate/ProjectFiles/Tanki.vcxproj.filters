@@ -36,6 +36,12 @@
     <Filter Include="Source\Tanki">
       <UniqueIdentifier>{4D791CD3-0CA8-3D1D-B5D3-586546132C87}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Tanki\AmmoBox.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\AmmoBox.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Tanki\Cannon.cpp">
       <Filter>Source\Tanki</Filter>
     </ClCompile>
@@ -46,6 +52,12 @@
       <Filter>Source\Tanki</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Tanki\GameStructs.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\Projectile.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\Projectile.h">
       <Filter>Source\Tanki</Filter>
     </ClInclude>
     <None Include="..\..\Source\Tanki\Tanki.Build.cs">
