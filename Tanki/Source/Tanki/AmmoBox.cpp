@@ -28,7 +28,7 @@ void AAmmoBox::OnMeshOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 	UE_LOG(LogTemp, Warning, TEXT("Projectile overlap : %s"), *OtherComp->GetName());
 	
 	ATankPawn* TankPawn = Cast<ATankPawn>(OtherActor);
-	if (TankPawn->GetbDefaultCannon()) //v positivnom sluchae bDefaultCannon = false;
+	if (TankPawn->GetBeDefaultCannon()) //v positivnom sluchae bDefaultCannon = false;
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("You're using DefaultCannon")));
 		return;

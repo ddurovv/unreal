@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "IDamageTaker.h"
+#include "MachinePawn.h"
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
@@ -11,55 +13,38 @@
 #include "TankPawn.generated.h"
 
 UCLASS()
-class TANKI_API ATankPawn : public APawn
+class TANKI_API ATankPawn : public AMachinePawn
 {
 	GENERATED_BODY()
 
 public:
 	ATankPawn();
+	
 	virtual void Tick(float DeltaTime) override;
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void RotateTank(float Value);
 
-	void SetupCannon(TSubclassOf<ACannon> newCannon);
+//	void GetCannon() const { return Cannon; }
 	void SetupDefaultCannon();
 	void SetupAmmoCannon(uint8 Ammo);
-	void Fire();
 	//void FireSpecial();
 	void ChangeCannon();
-	bool GetbDefaultCannon() const;
+	bool GetBeDefaultCannon();
 	
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	UStaticMeshComponent* BodyMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	UStaticMeshComponent* TurretMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	UBoxComponent* BoxCollision;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* Camera;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cannon")
-	TSubclassOf<ACannon> CannonClass;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cannon")
 	TSubclassOf<ACannon> DefaultCannonClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cannon")
-	class UArrowComponent* CannonSetupPoint;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Cannon")
-	ACannon* Cannon;
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Cannon")
 	ACannon* DefaultCannon;
 	
@@ -71,6 +56,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	uint8 DefaultCannonAmmo = 10;
+
 private:
 	ACannon* TempCannon;
 	class ATankPlayerController* TankController;

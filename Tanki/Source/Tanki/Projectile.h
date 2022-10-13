@@ -10,6 +10,8 @@ UCLASS()
 class TANKI_API AProjectile : public AActor
 {
 	GENERATED_BODY()
+
+	DECLARE_EVENT_OneParam(AProjectile, FOnKill, int32);
 	
 public:	
 	AProjectile();
@@ -17,9 +19,13 @@ public:
 	void Start();
 
 	FTimerHandle MoveTimer;
-protected:
-	virtual void BeginPlay() override;
+	FTimerHandle DeactivateTimer;
 
+	FOnKill OnKilled;
+	
+	void Deactivate();
+	bool bIsActivation = false;
+protected:
 	void Move();
 
 	UFUNCTION()
@@ -40,4 +46,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Component")
 	float Damage = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Component")
+	float DeactivateTime = 10.0f;
 };

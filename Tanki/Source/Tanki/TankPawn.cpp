@@ -3,6 +3,7 @@
 
 #include "TankPawn.h"
 
+#include "HealthComponent.h"
 #include "TankPlayerController.h"
 #include "Components/ArrowComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -10,13 +11,6 @@
 ATankPawn::ATankPawn()
 {
  	PrimaryActorTick.bCanEverTick = true;
-
-	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
-	RootComponent = BoxCollision;
-	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BodyMesh"));
-	BodyMesh->SetupAttachment(RootComponent);
-	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretMesh"));
-	TurretMesh->SetupAttachment(BodyMesh);
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpingArm"));
 	SpringArm->SetupAttachment(RootComponent);
@@ -27,15 +21,12 @@ ATankPawn::ATankPawn()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
-	CannonSetupPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("CannonSetupPoint"));
-	CannonSetupPoint->SetupAttachment(TurretMesh);
 }
 
 void ATankPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	TankController = Cast<ATankPlayerController>(GetController());
-	SetupCannon(CannonClass);
 	SetupDefaultCannon();
 	SetupAmmoCannon(3);
 }
@@ -53,23 +44,6 @@ void ATankPawn::MoveRight(float Value)
 void ATankPawn::RotateTank(float Value)
 {
 	RotateRightAxisValue = Value;
-}
-
-void ATankPawn::SetupCannon(TSubclassOf<ACannon> newCannon)
-{
-	if (!newCannon)
-	{
-		return;
-	}
-	if (Cannon)
-	{
-		Cannon->Destroy();
-	}
-	FActorSpawnParameters SpawnParam;
-	SpawnParam.Instigator = this;
-	SpawnParam.Owner = this;
-	Cannon = GetWorld()->SpawnActor<ACannon>(newCannon, SpawnParam);
-	Cannon->AttachToComponent(CannonSetupPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
 }
 
 void ATankPawn::SetupDefaultCannon()
@@ -98,15 +72,6 @@ void ATankPawn::SetupAmmoCannon(uint8 Ammo)
 		DefaultCannon->SetupAmmo(DefaultCannonAmmo);
 	}
 }
-
-void ATankPawn::Fire()
-{
-	if (Cannon)
-	{
-		Cannon->Fire();
-	}
-}
-
 /*void ATankPawn::FireSpecial()
 {
 	if (Cannon)
@@ -126,10 +91,11 @@ void ATankPawn::ChangeCannon()
 	}
 }
 
-bool ATankPawn::GetbDefaultCannon() const
+bool ATankPawn::GetBeDefaultCannon()
 {
 	return bDefaultCannon;
 }
+
 
 void ATankPawn::Tick(float DeltaTime)
 {

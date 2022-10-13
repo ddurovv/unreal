@@ -54,10 +54,40 @@
     <ClInclude Include="..\..\Source\Tanki\GameStructs.h">
       <Filter>Source\Tanki</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\HealthComponent.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\HealthComponent.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\IDamageTaker.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\IDamageTaker.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\MachinePawn.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\MachinePawn.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Tanki\Projectile.cpp">
       <Filter>Source\Tanki</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Tanki\Projectile.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\ProjectilePool.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\ProjectilePool.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\Scorable.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\Scorable.h">
       <Filter>Source\Tanki</Filter>
     </ClInclude>
     <None Include="..\..\Source\Tanki\Tanki.Build.cs">
@@ -85,6 +115,12 @@
       <Filter>Source\Tanki</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Tanki\TankPlayerController.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\Turret.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\Turret.h">
       <Filter>Source\Tanki</Filter>
     </ClInclude>
   </ItemGroup>

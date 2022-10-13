@@ -3,6 +3,8 @@
 
 #include "Projectile.h"
 
+#include "IDamageTaker.h"
+#include "Scorable.h"
 #include "Components/SphereComponent.h"
 
 AProjectile::AProjectile()
@@ -24,12 +26,16 @@ AProjectile::AProjectile()
 void AProjectile::Start()
 {
 	GetWorld()->GetTimerManager().SetTimer(MoveTimer, this, &AProjectile::Move, MoveRate, true, MoveRate);
+	GetWorld()->GetTimerManager().SetTimer(DeactivateTimer,this,&AProjectile::Deactivate, DeactivateTime,false);
 }
 
-void AProjectile::BeginPlay()
+void AProjectile::Deactivate()
 {
-	Super::BeginPlay();
-	
+	bIsActivation = false;
+	SetActorLocation(FVector{0.0f,0.0f,-50.0f});
+	GetWorld()->GetTimerManager().ClearTimer(DeactivateTimer);
+	GetWorld()->GetTimerManager().ClearTimer(MoveTimer);
+	SetActorEnableCollision(false);
 }
 
 void AProjectile::Move()
@@ -41,7 +47,42 @@ void AProjectile::Move()
 void AProjectile::OnMeshOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Projectile overlap : %s"), *OtherActor->GetName());
-	OtherActor->Destroy();
-	Destroy();
+	AActor* owner = GetOwner();
+	AActor* ownerByOwner = owner != nullptr ? owner->GetOwner() : nullptr;
+	
+	if (OtherActor != owner && OtherActor != ownerByOwner)
+	{
+		IIDamageTaker* DamageTakerActor = Cast<IIDamageTaker>(OtherActor);
+		IScorable* ScorableActor = Cast<IScorable>(OtherActor);
+
+		int32 ScoreValue = 0;
+
+		if(ScorableActor)
+		{
+			ScoreValue = ScorableActor->GetPoints();
+		}
+		if (DamageTakerActor)
+		{
+			FDamageData damageData;
+			damageData.DamageValue = Damage;
+			damageData.Instigator = owner;
+			damageData.DamageMaker = this;
+
+			DamageTakerActor->TakeDamage(damageData);
+			
+			if (OtherActor->IsActorBeingDestroyed() && ScoreValue != 0)
+			{
+				if (OnKilled.IsBound())
+				{
+					OnKilled.Broadcast(ScoreValue);
+				}
+			}
+		}
+		else
+		{
+			OtherActor->Destroy();
+		}
+	}
+	//Deactivate(); //turn on if ProjectilePool will be fixed
+	Destroy(); //turn off actually too
 }
