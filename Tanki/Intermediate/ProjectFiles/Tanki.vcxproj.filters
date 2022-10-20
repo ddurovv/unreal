@@ -90,6 +90,12 @@
     <ClInclude Include="..\..\Source\Tanki\Scorable.h">
       <Filter>Source\Tanki</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\TankAIController.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\TankAIController.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
     <None Include="..\..\Source\Tanki\Tanki.Build.cs">
       <Filter>Source\Tanki</Filter>
     </None>

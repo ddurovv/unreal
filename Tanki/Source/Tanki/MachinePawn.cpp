@@ -5,6 +5,7 @@
 
 #include "HealthComponent.h"
 #include "Components/BoxComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 AMachinePawn::AMachinePawn()
 {
@@ -24,6 +25,10 @@ AMachinePawn::AMachinePawn()
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 	HealthComponent->OnDie.AddUObject(this, &AMachinePawn::Die);
 	HealthComponent->OnHealthChanged.AddUObject(this, &AMachinePawn::DamageTaked);
+
+	DestroyEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ShootEffect"));
+	DestroyEffect->SetAutoActivate(false);
+	DestroyEffect->SetupAttachment(BodyMesh);
 }
 
 void AMachinePawn::TakeDamage(FDamageData DamageData)
@@ -44,6 +49,7 @@ void AMachinePawn::Die()
 	{
 	Cannon->Destroy();
 	}
+	DestroyEffect->Activate();
 	Destroy();
 }
 

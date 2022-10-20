@@ -8,14 +8,23 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class UHealthComponent;
 #ifdef TANKI_TankPawn_generated_h
 #error "TankPawn.generated.h already included, missing '#pragma once' in TankPawn.h"
 #endif
 #define TANKI_TankPawn_generated_h
 
 #define FID_Tanki_Source_Tanki_TankPawn_h_18_SPARSE_DATA
-#define FID_Tanki_Source_Tanki_TankPawn_h_18_RPC_WRAPPERS
-#define FID_Tanki_Source_Tanki_TankPawn_h_18_RPC_WRAPPERS_NO_PURE_DECLS
+#define FID_Tanki_Source_Tanki_TankPawn_h_18_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execGetHealthComponent);
+
+
+#define FID_Tanki_Source_Tanki_TankPawn_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execGetHealthComponent);
+
+
 #define FID_Tanki_Source_Tanki_TankPawn_h_18_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesATankPawn(); \

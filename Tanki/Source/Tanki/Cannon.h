@@ -72,7 +72,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
 	uint8 FireSerialAmount = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Params")
-	uint8 FireSpecialSerialAmount = 1; 
+	uint8 FireSpecialSerialAmount = 1;
+//effects
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	class UAudioComponent* ShootSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	class UParticleSystemComponent* ShootEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	TSubclassOf<UCameraShakeBase> CameraShake;	
 private:
 	bool bReadyToFire = false;
 	uint8 currentShootCounter = 0;

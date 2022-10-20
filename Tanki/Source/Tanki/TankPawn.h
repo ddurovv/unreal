@@ -26,16 +26,35 @@ public:
 	void MoveRight(float Value);
 	void RotateTank(float Value);
 
-//	void GetCannon() const { return Cannon; }
+	UFUNCTION(BlueprintCallable)
+	class UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+//	UFUNCTION()
+//	virtual void TakeDamage(FDamageData DamageData) override;
+
+//AI	
+	ACannon* GetCannon() const { return Cannon; }
+	FVector GetTurretForwardVector() const { return TurretMesh->GetForwardVector(); }
+	float GetMovementAccurency() const { return MovementAccurency; }
+	TArray<FVector> GetPatrollingPoints() const { return PatrollingPoints; }
+	
+//Cannon	
 	void SetupDefaultCannon();
 	void SetupAmmoCannon(uint8 Ammo);
 	//void FireSpecial();
 	void ChangeCannon();
 	bool GetBeDefaultCannon();
-	
+	void RotateTurretTo(FVector TargetPosition);
+
+	FVector GetEyesPosition() const;
 protected:
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AIComponents")
+	float MovementAccurency = 400.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AIComponents", Meta = (MakeEditWidget = true))
+	TArray<FVector> PatrollingPoints;	
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USpringArmComponent* SpringArm;
 

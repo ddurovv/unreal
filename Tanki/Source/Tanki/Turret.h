@@ -22,8 +22,9 @@ protected:
 	void Targeting();
 	void RotateToPlayer();
 	bool IsPlayerInRange();
+	bool IsPlayerSeen();
 	bool CanFire();
-
+	
 	UPROPERTY()
 	APawn* PlayerPawn;
 

@@ -8,6 +8,8 @@
 #include "TimerManager.h"
 #include "IDamageTaker.h"
 #include "Components/ArrowComponent.h"
+#include "Components/AudioComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 ACannon::ACannon()
@@ -22,6 +24,12 @@ ACannon::ACannon()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("ProjectileSpawnPoint"));
 	ProjectileSpawnPoint->SetupAttachment(CannonMesh);
+
+	ShootSound = CreateDefaultSubobject<UAudioComponent>(TEXT("ShootSound"));
+	ShootSound->SetAutoActivate(false);
+	ShootEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ShootEffect"));
+	ShootEffect->SetAutoActivate(false);
+	ShootEffect->SetupAttachment(ProjectileSpawnPoint);
 }
 void ACannon::BeginPlay()
 {
@@ -51,6 +59,13 @@ void ACannon::Fire()
 	}
 	bReadyToFire = false;
 	Bullets--;
+
+	ShootEffect->Activate();
+	ShootSound->Play();
+	if (CameraShake)
+	{
+		GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(CameraShake);
+	}
 	
 	if (CannonType == ECannonType::FireProjectile)
 	{

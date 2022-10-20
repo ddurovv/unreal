@@ -53,6 +53,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	class UHealthComponent*  HealthComponent;
+//effects
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	class UParticleSystemComponent* DestroyEffect;
 	
 	UPROPERTY()
 	ACannon* Cannon;
