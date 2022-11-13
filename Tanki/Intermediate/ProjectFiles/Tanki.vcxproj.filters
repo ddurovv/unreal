@@ -72,6 +72,12 @@
     <ClInclude Include="..\..\Source\Tanki\MachinePawn.h">
       <Filter>Source\Tanki</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\MapLoader.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\MapLoader.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Tanki\Projectile.cpp">
       <Filter>Source\Tanki</Filter>
     </ClCompile>
@@ -94,6 +100,12 @@
       <Filter>Source\Tanki</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Tanki\TankAIController.h">
+      <Filter>Source\Tanki</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Tanki\TankFactory.cpp">
+      <Filter>Source\Tanki</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tanki\TankFactory.h">
       <Filter>Source\Tanki</Filter>
     </ClInclude>
     <None Include="..\..\Source\Tanki\Tanki.Build.cs">

@@ -23,7 +23,6 @@ AMachinePawn::AMachinePawn()
 	CannonSetupPoint->SetupAttachment(TurretMesh);
 	
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-	HealthComponent->OnDie.AddUObject(this, &AMachinePawn::Die);
 	HealthComponent->OnHealthChanged.AddUObject(this, &AMachinePawn::DamageTaked);
 
 	DestroyEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ShootEffect"));
@@ -43,19 +42,14 @@ void AMachinePawn::BeginPlay()
 	SetupCannon(EquippedCannonClass);
 }
 
-void AMachinePawn::Die()
-{
-	if (Cannon)
-	{
-	Cannon->Destroy();
-	}
-	DestroyEffect->Activate();
-	Destroy();
-}
-
 void AMachinePawn::DamageTaked(float Value)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Object %s taked damage: %f, his health: %f"), *GetName(), Value, HealthComponent->GetHealth());
+}
+
+void AMachinePawn::ActivateDestroyedEffect()
+{
+	DestroyEffect->Activate();
 }
 
 void AMachinePawn::Fire()

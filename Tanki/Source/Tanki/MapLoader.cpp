@@ -3,25 +3,65 @@
 
 #include "MapLoader.h"
 
+#include "TankPawn.h"
+#include "Components/SceneCaptureComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/PointLightComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Net/Core/Connection/NetResult.h"
+
 // Sets default values
 AMapLoader::AMapLoader()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
+	USceneComponent* SceneComp = CreateDefaultSubobject<USceneComponent>("RootComponent");
+	RootComponent = SceneComp;
+
+	LevelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LevelMesh"));
+	LevelMesh->SetupAttachment(SceneComp);
+
+	ActivatedLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("ActivatedLight"));
+	ActivatedLight->SetupAttachment(SceneComp);
+
+	DeactivatedLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("DeactivatedLight"));
+	DeactivatedLight->SetupAttachment(SceneComp);
+	
+	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+	BoxCollider->SetupAttachment(LevelMesh);
+//	BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &AMapLoader::OnMeshOverlapBegin);
 }
 
-// Called when the game starts or when spawned
+void AMapLoader::SetIsActivated(bool NewIsActivated)
+{
+	bIsActivated = NewIsActivated;
+	SetActivatedLights();
+}
+
 void AMapLoader::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	SetActivatedLights();
 }
 
-// Called every frame
-void AMapLoader::Tick(float DeltaTime)
+void AMapLoader::SetActivatedLights()
 {
-	Super::Tick(DeltaTime);
-
+	ActivatedLight->SetHiddenInGame(!bIsActivated);
+	DeactivatedLight->SetHiddenInGame(bIsActivated);
 }
 
+void AMapLoader::OnMeshOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (bIsActivated)
+	{
+		return;
+	}
+
+	ATankPawn* TankPawn = Cast<ATankPawn>(OtherActor);
+	if (TankPawn)
+	{
+		UGameplayStatics::OpenLevel(GetWorld(), LoadLevelName);
+	}
+}

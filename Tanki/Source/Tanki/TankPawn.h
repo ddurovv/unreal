@@ -8,10 +8,14 @@
 #include "MachinePawn.h"
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
+#include "Engine/TargetPoint.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "TankPawn.generated.h"
 
+class UStaticMeshComponent;
+class ACannon;
+class ATargetPoint;
 UCLASS()
 class TANKI_API ATankPawn : public AMachinePawn
 {
@@ -35,7 +39,8 @@ public:
 	ACannon* GetCannon() const { return Cannon; }
 	FVector GetTurretForwardVector() const { return TurretMesh->GetForwardVector(); }
 	float GetMovementAccurency() const { return MovementAccurency; }
-	TArray<FVector> GetPatrollingPoints() const { return PatrollingPoints; }
+	TArray<FVector> GetPatrollingPoints() const;
+	void SetPatrollingPoints(TArray<ATargetPoint*> NewPatrollingPoints);
 	
 //Cannon	
 	void SetupDefaultCannon();
@@ -46,6 +51,7 @@ public:
 	void RotateTurretTo(FVector TargetPosition);
 
 	FVector GetEyesPosition() const;
+	
 protected:
 	virtual void BeginPlay() override;
 
@@ -53,7 +59,7 @@ protected:
 	float MovementAccurency = 400.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AIComponents", Meta = (MakeEditWidget = true))
-	TArray<FVector> PatrollingPoints;	
+	TArray<ATargetPoint*> PatrollingPoints;	
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USpringArmComponent* SpringArm;
@@ -75,7 +81,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	uint8 DefaultCannonAmmo = 10;
-
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void DyingTank();
+	
 private:
 	ACannon* TempCannon;
 	class ATankPlayerController* TankController;

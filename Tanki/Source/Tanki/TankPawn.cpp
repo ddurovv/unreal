@@ -21,6 +21,7 @@ ATankPawn::ATankPawn()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
+	HealthComponent->OnDie.AddUObject(this, &ATankPawn::DyingTank);
 }
 
 void ATankPawn::RotateTurretTo(FVector TargetPosition)
@@ -36,6 +37,16 @@ FVector ATankPawn::GetEyesPosition() const
 {
 	return CannonSetupPoint->GetComponentLocation();
 }
+
+/*void ATankPawn::DiyngTank()
+{
+	if (Cannon)
+	{
+		Cannon->Destroy();
+	}
+	ActivateDestroyedEffect();
+	Destroy();
+}*/
 
 void ATankPawn::BeginPlay()
 {
@@ -58,6 +69,21 @@ void ATankPawn::MoveRight(float Value)
 void ATankPawn::RotateTank(float Value)
 {
 	RotateRightAxisValue = Value;
+}
+
+TArray<FVector> ATankPawn::GetPatrollingPoints() const
+{
+	TArray<FVector> points;
+	for(ATargetPoint* point : PatrollingPoints)
+	{
+		points.Add(point->GetActorLocation());
+	}
+	return points;
+}
+
+void ATankPawn::SetPatrollingPoints(TArray<ATargetPoint*> NewPatrollingPoints)
+{
+	PatrollingPoints = NewPatrollingPoints;
 }
 
 void ATankPawn::SetupDefaultCannon()

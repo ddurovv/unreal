@@ -22,6 +22,7 @@ ATurret::ATurret()
 	{
 		TurretMesh->SetStaticMesh(turretMeshTemp);
 	}
+	HealthComponent->OnDie.AddUObject(this, &ATurret::Die);
 }
 
 void ATurret::BeginPlay()
@@ -102,4 +103,14 @@ bool ATurret::CanFire()
 
 	float AimAngle = FMath::RadiansToDegrees(acosf(FVector::DotProduct(targetingDir,dirToPlayer)));
 	return AimAngle <= Accurency;
+}
+
+void ATurret::Die()
+{
+	if (Cannon)
+	{
+		Cannon->Destroy();
+	}
+	ActivateDestroyedEffect();
+	Destroy();
 }

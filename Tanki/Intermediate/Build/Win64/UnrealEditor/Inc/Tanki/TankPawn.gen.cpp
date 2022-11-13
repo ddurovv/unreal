@@ -14,7 +14,7 @@ void EmptyLinkFunctionForGeneratedCodeTankPawn() {}
 	TANKI_API UClass* Z_Construct_UClass_AMachinePawn();
 	UPackage* Z_Construct_UPackage__Script_Tanki();
 	TANKI_API UClass* Z_Construct_UClass_UHealthComponent_NoRegister();
-	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
+	ENGINE_API UClass* Z_Construct_UClass_ATargetPoint_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
@@ -27,6 +27,11 @@ void EmptyLinkFunctionForGeneratedCodeTankPawn() {}
 		*(UHealthComponent**)Z_Param__Result=P_THIS->GetHealthComponent();
 		P_NATIVE_END;
 	}
+	static FName NAME_ATankPawn_DyingTank = FName(TEXT("DyingTank"));
+	void ATankPawn::DyingTank()
+	{
+		ProcessEvent(FindFunctionChecked(NAME_ATankPawn_DyingTank),NULL);
+	}
 	void ATankPawn::StaticRegisterNativesATankPawn()
 	{
 		UClass* Class = ATankPawn::StaticClass();
@@ -34,6 +39,28 @@ void EmptyLinkFunctionForGeneratedCodeTankPawn() {}
 			{ "GetHealthComponent", &ATankPawn::execGetHealthComponent },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_ATankPawn_DyingTank_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ATankPawn_DyingTank_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "TankPawn.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ATankPawn_DyingTank_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ATankPawn, nullptr, "DyingTank", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08080800, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ATankPawn_DyingTank_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ATankPawn_DyingTank_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ATankPawn_DyingTank()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ATankPawn_DyingTank_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_ATankPawn_GetHealthComponent_Statics
 	{
@@ -91,7 +118,7 @@ void EmptyLinkFunctionForGeneratedCodeTankPawn() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_MovementAccurency_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_MovementAccurency;
-		static const UECodeGen_Private::FStructPropertyParams NewProp_PatrollingPoints_Inner;
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_PatrollingPoints_Inner;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_PatrollingPoints_MetaData[];
 #endif
@@ -133,6 +160,7 @@ void EmptyLinkFunctionForGeneratedCodeTankPawn() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_Tanki,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_ATankPawn_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_ATankPawn_DyingTank, "DyingTank" }, // 4227460476
 		{ &Z_Construct_UFunction_ATankPawn_GetHealthComponent, "GetHealthComponent" }, // 5270643
 	};
 #if WITH_METADATA
@@ -149,7 +177,7 @@ void EmptyLinkFunctionForGeneratedCodeTankPawn() {}
 	};
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ATankPawn_Statics::NewProp_MovementAccurency = { "MovementAccurency", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ATankPawn, MovementAccurency), METADATA_PARAMS(Z_Construct_UClass_ATankPawn_Statics::NewProp_MovementAccurency_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ATankPawn_Statics::NewProp_MovementAccurency_MetaData)) };
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ATankPawn_Statics::NewProp_PatrollingPoints_Inner = { "PatrollingPoints", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ATankPawn_Statics::NewProp_PatrollingPoints_Inner = { "PatrollingPoints", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_ATargetPoint_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ATankPawn_Statics::NewProp_PatrollingPoints_MetaData[] = {
 		{ "Category", "AIComponents" },
@@ -257,9 +285,9 @@ void EmptyLinkFunctionForGeneratedCodeTankPawn() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Tanki_Source_Tanki_TankPawn_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ATankPawn, ATankPawn::StaticClass, TEXT("ATankPawn"), &Z_Registration_Info_UClass_ATankPawn, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATankPawn), 4068343381U) },
+		{ Z_Construct_UClass_ATankPawn, ATankPawn::StaticClass, TEXT("ATankPawn"), &Z_Registration_Info_UClass_ATankPawn, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ATankPawn), 626120177U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Tanki_Source_Tanki_TankPawn_h_3194454580(TEXT("/Script/Tanki"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Tanki_Source_Tanki_TankPawn_h_754311603(TEXT("/Script/Tanki"),
 		Z_CompiledInDeferFile_FID_Tanki_Source_Tanki_TankPawn_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Tanki_Source_Tanki_TankPawn_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

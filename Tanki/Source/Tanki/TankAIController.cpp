@@ -9,25 +9,17 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AITankPawn = Cast<ATankPawn>(GetPawn());
-	if (!AITankPawn)
-	{
-	return;
-	}
-	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-	
-	FVector pawnLocation = AITankPawn->GetActorLocation();
-	MovementAccurency = AITankPawn->GetMovementAccurency();
-	TArray<FVector> points = AITankPawn->GetPatrollingPoints();
-	for (FVector point: points)
-	{
-		PatrollingPoints.Add(point + pawnLocation); // pozitsiya tochki vozvraschaetsya local'no
-	}
-	PatrollingIndex = 0;
+	Initialize();
 }
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	if (!AITankPawn)
+		Initialize();
+
+	if (!AITankPawn)
+		return;
 	
 	AITankPawn->MoveForward(1);
 
@@ -136,4 +128,23 @@ bool ATankAIController::IsPlayerSeen()
 	}
 	DrawDebugLine(GetWorld(),eyesPos,playerPos, FColor::Black, false, 0.5f, 0, 10.0f);
 	return false;
+}
+
+void ATankAIController::Initialize()
+{
+	AITankPawn = Cast<ATankPawn>(GetPawn());
+	if (!AITankPawn)
+	{
+		return;
+	}
+	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+	
+	FVector pawnLocation = AITankPawn->GetActorLocation();
+	MovementAccurency = AITankPawn->GetMovementAccurency();
+	TArray<FVector> points = AITankPawn->GetPatrollingPoints();
+	for (FVector point: points)
+	{
+		PatrollingPoints.Add(point + pawnLocation); // pozitsiya tochki vozvraschaetsya local'no
+	}
+	PatrollingIndex = 0;
 }

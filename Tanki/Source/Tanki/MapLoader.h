@@ -12,15 +12,34 @@ class TANKI_API AMapLoader : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	AMapLoader();
 
+	void SetIsActivated(bool NewIsActivated);
+	
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	void SetActivatedLights();
+
+	void OnMeshOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	class UStaticMeshComponent* LevelMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	class UBoxComponent* BoxCollider;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	class UPointLightComponent* ActivatedLight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	class UPointLightComponent* DeactivatedLight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	FName LoadLevelName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	bool bIsActivated = false;
 
 };

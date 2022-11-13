@@ -29,8 +29,8 @@ public:
 	int32 ScoreValue = 0;//how much points by gets for destroy
 
 	UFUNCTION()
-	void ShowScore(int32 Value);	
-
+	void ShowScore(int32 Value);
+	
 	int32 Score = 0;
 	
 protected:
@@ -59,8 +59,8 @@ protected:
 	
 	UPROPERTY()
 	ACannon* Cannon;
-	
-	void Die();
+
 	void DamageTaked(float Value);
+	void ActivateDestroyedEffect();
 	
 };
