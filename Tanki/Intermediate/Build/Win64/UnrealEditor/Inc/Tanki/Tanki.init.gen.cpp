@@ -7,23 +7,27 @@
 #include "UObject/GeneratedCppIncludes.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeTanki_init() {}
+	TANKI_API UFunction* Z_Construct_UDelegateFunction_Tanki_StartMenuDelegate__DelegateSignature();
 	static FPackageRegistrationInfo Z_Registration_Info_UPackage__Script_Tanki;
 	FORCENOINLINE UPackage* Z_Construct_UPackage__Script_Tanki()
 	{
 		if (!Z_Registration_Info_UPackage__Script_Tanki.OuterSingleton)
 		{
+			static UObject* (*const SingletonFuncArray[])() = {
+				(UObject* (*)())Z_Construct_UDelegateFunction_Tanki_StartMenuDelegate__DelegateSignature,
+			};
 			static const UECodeGen_Private::FPackageParams PackageParams = {
 				"/Script/Tanki",
-				nullptr,
-				0,
+				SingletonFuncArray,
+				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x6324D8CD,
-				0x68E28905,
+				0x1B8D00CF,
+				0x1DDC020D,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_Tanki.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_Tanki.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_Tanki(Z_Construct_UPackage__Script_Tanki, TEXT("/Script/Tanki"), Z_Registration_Info_UPackage__Script_Tanki, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x6324D8CD, 0x68E28905));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_Tanki(Z_Construct_UPackage__Script_Tanki, TEXT("/Script/Tanki"), Z_Registration_Info_UPackage__Script_Tanki, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x1B8D00CF, 0x1DDC020D));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

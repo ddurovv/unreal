@@ -45,7 +45,6 @@ public:
 //Cannon	
 	void SetupDefaultCannon();
 	void SetupAmmoCannon(uint8 Ammo);
-	//void FireSpecial();
 	void ChangeCannon();
 	bool GetBeDefaultCannon();
 	void RotateTurretTo(FVector TargetPosition);

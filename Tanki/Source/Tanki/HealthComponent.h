@@ -24,6 +24,8 @@ public:
 	void TakeDamage(FDamageData DamageData);
 	float GetHealth() const;
 	void AddHealth(float newHealth);
+
+	UFUNCTION(BlueprintCallable)
 	float GetHealthState();
 	
 protected:

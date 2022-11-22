@@ -253,6 +253,10 @@ E:\Projects\unreal\Tanki\Source\Tanki\TankPawn.cpp
 /I Developer\AnimationDataController\Public
 /I E:\Projects\unreal\Tanki\Intermediate\Build\Win64\UnrealEditor\Inc\Tanki
 /I E:\Projects\unreal\Tanki\Source
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AugmentedReality
+/I Runtime\AugmentedReality\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\MRMesh
+/I Runtime\MRMesh\Public
 /I ThirdParty\mimalloc\include
 /I ThirdParty\LibTiff\Source\Win64
 /I ThirdParty\LibTiff\Source

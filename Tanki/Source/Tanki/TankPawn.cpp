@@ -112,13 +112,6 @@ void ATankPawn::SetupAmmoCannon(uint8 Ammo)
 		DefaultCannon->SetupAmmo(DefaultCannonAmmo);
 	}
 }
-/*void ATankPawn::FireSpecial()
-{
-	if (Cannon)
-	{
-		Cannon->FireSpecial();
-	}
-}*/
 
 void ATankPawn::ChangeCannon()
 {
